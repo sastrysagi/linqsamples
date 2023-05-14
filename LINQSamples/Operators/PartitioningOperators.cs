@@ -32,7 +32,7 @@ public class PartitioningOperators
                 from cust in customers
                 from order in cust.Orders
                 where cust.Region == "WA"
-                select new {cust.CustomerID, order.OrderID, order.OrderDate})
+                select new {CustomerID = cust.CustomerId, OrderID = order.OrderId, order.OrderDate})
             .Take(3);
 
         Console.WriteLine("First 3 orders in WA:");
@@ -63,7 +63,7 @@ public class PartitioningOperators
             from cust in customers
             from order in cust.Orders
             where cust.Region == "WA"
-            select new {cust.CustomerID, order.OrderID, order.OrderDate};
+            select new {CustomerID = cust.CustomerId, OrderID = order.OrderId, order.OrderDate};
 
         var allButFirst2Orders = waOrders.Skip(2);
 

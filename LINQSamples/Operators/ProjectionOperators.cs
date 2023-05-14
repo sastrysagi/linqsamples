@@ -178,12 +178,12 @@ public class ProjectionOperators
         var smallOrders =
             from c in customers
             from o in orders
-            where c.Field<string>("CustomerID") == o.Field<string>("CustomerID")
+            where c.Field<string>("CustomerId") == o.Field<string>("CustomerId")
                   && o.Field<decimal>("Total") < 500.00M
             select new
             {
-                CustomerID = c.Field<string>("CustomerID"),
-                OrderID = o.Field<int>("OrderID"),
+                CustomerID = c.Field<string>("CustomerId"),
+                OrderID = o.Field<int>("OrderId"),
                 Total = o.Field<decimal>("Total")
             };
 
@@ -201,12 +201,12 @@ public class ProjectionOperators
         var myOrders =
             from c in customers
             from o in orders
-            where c.Field<string>("CustomerID") == o.Field<string>("CustomerID") &&
+            where c.Field<string>("CustomerId") == o.Field<string>("CustomerId") &&
                   o.Field<DateTime>("OrderDate") >= new DateTime(1998, 1, 1)
             select new
             {
-                CustomerID = c.Field<string>("CustomerID"),
-                OrderID = o.Field<int>("OrderID"),
+                CustomerID = c.Field<string>("CustomerId"),
+                OrderID = o.Field<int>("OrderId"),
                 OrderDate = o.Field<DateTime>("OrderDate")
             };
 
@@ -226,9 +226,9 @@ public class ProjectionOperators
             from c in customers
             from o in orders
             let total = o.Field<decimal>("Total")
-            where c.Field<string>("CustomerID") == o.Field<string>("CustomerID")
+            where c.Field<string>("CustomerId") == o.Field<string>("CustomerId")
                   && total >= 2000.0M
-            select new {CustomerID = c.Field<string>("CustomerID"), OrderID = o.Field<int>("OrderID"), total};
+            select new {CustomerID = c.Field<string>("CustomerId"), OrderID = o.Field<int>("OrderId"), total};
 
         ObjectDumper.Write(myOrders);
     }
@@ -247,9 +247,9 @@ public class ProjectionOperators
             from c in customers
             where c.Field<string>("Region") == "WA"
             from o in orders
-            where c.Field<string>("CustomerID") == o.Field<string>("CustomerID")
+            where c.Field<string>("CustomerId") == o.Field<string>("CustomerId")
                   && (DateTime) o["OrderDate"] >= cutoffDate
-            select new {CustomerID = c.Field<string>("CustomerID"), OrderID = o.Field<int>("OrderID")};
+            select new {CustomerID = c.Field<string>("CustomerId"), OrderID = o.Field<int>("OrderId")};
 
         ObjectDumper.Write(myOrders);
     }
@@ -266,11 +266,11 @@ public class ProjectionOperators
         var customerOrders =
             customers.SelectMany(
                 (cust, custIndex) =>
-                    orders.Where(o => cust.Field<string>("CustomerID") == o.Field<string>("CustomerID"))
-                        .Select(o => new {CustomerIndex = custIndex + 1, OrderID = o.Field<int>("OrderID")}));
+                    orders.Where(o => cust.Field<string>("CustomerId") == o.Field<string>("CustomerId"))
+                        .Select(o => new {CustomerIndex = custIndex + 1, OrderID = o.Field<int>("OrderId")}));
 
         foreach (var c in customerOrders)
             Console.WriteLine("Customer Index: " + c.CustomerIndex +
-                              " has an order with OrderID " + c.OrderID);
+                              " has an order with OrderId " + c.OrderID);
     }
 }

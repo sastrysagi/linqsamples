@@ -112,7 +112,7 @@ public class GroupingOperators
                     Console.WriteLine("\t\t Month= {0}", mg.Month);
                     foreach (var order in mg.Orders)
                     {
-                        Console.WriteLine("\t\t\t OrderID= {0} ", order.Field<int>("OrderID"));
+                        Console.WriteLine("\t\t\t OrderId= {0} ", order.Field<int>("OrderId"));
                         Console.WriteLine("\t\t\t OrderDate= {0} ", order.Field<DateTime>("OrderDate"));
                     }
                 }

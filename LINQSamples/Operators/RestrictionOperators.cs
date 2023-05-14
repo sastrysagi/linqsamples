@@ -14,15 +14,11 @@ public class RestrictionOperators
         //    from num in numbers
         //    where num < 5
         //    select num;
-       // var lowNums = numbers.Where(num => num < 5);
-       var lowNums = new List<int>();
-       foreach (var num in numbers)
-       {
-           if (num < 5)
-           {
-               lowNums.Add(num);
-           }
-       }
+        // var lowNums = numbers.Where(num => num < 5);
+        var lowNums = new List<int>();
+        foreach (var num in numbers)
+            if (num < 5)
+                lowNums.Add(num);
 
         Console.WriteLine("Numbers < 5:");
         foreach (var x in lowNums) Console.WriteLine(x);
@@ -37,15 +33,11 @@ public class RestrictionOperators
         //    from prod in products
         //    where prod.UnitsInStock == 0
         //    select prod;
-       // var soldOutProducts = products.Where(prod => prod.UnitsInStock == 0);
-       var soldOutProducts = new List<Product>();
-       foreach (var prod in products)
-       {
-           if (prod.UnitsInStock == 0)
-           {
-               soldOutProducts.Add(prod);
-           }
-       }
+        // var soldOutProducts = products.Where(prod => prod.UnitsInStock == 0);
+        var soldOutProducts = new List<Product>();
+        foreach (var prod in products)
+            if (prod.UnitsInStock == 0)
+                soldOutProducts.Add(prod);
         Console.WriteLine("Sold out products:");
         foreach (var product in soldOutProducts) Console.WriteLine("{0} is sold out!", product.ProductName);
     }
@@ -80,9 +72,9 @@ public class RestrictionOperators
         Console.WriteLine("Customers from Washington and their orders:");
         foreach (var customer in waCustomers)
         {
-            Console.WriteLine("Customer {0}: {1}", customer.CustomerID, customer.CompanyName);
+            Console.WriteLine("Customer {0}: {1}", customer.CustomerId, customer.CompanyName);
             foreach (var order in customer.Orders)
-                Console.WriteLine("  Order {0}: {1}", order.OrderID, order.OrderDate);
+                Console.WriteLine("  Order {0}: {1}", order.OrderId, order.OrderDate);
         }
     }
 

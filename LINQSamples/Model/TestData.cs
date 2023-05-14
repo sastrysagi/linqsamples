@@ -232,7 +232,7 @@ public class TestData
     public static void CreateCustomersAndOrdersTables(DataSet ds)
     {
         var customers = new DataTable("Customers");
-        customers.Columns.Add("CustomerID", typeof(string));
+        customers.Columns.Add("CustomerId", typeof(string));
         customers.Columns.Add("CompanyName", typeof(string));
         customers.Columns.Add("Address", typeof(string));
         customers.Columns.Add("City", typeof(string));
@@ -246,50 +246,54 @@ public class TestData
 
         var orders = new DataTable("Orders");
 
-        orders.Columns.Add("OrderID", typeof(int));
-        orders.Columns.Add("CustomerID", typeof(string));
+        orders.Columns.Add("OrderId", typeof(int));
+        orders.Columns.Add("CustomerId", typeof(string));
         orders.Columns.Add("OrderDate", typeof(DateTime));
         orders.Columns.Add("Total", typeof(decimal));
 
         ds.Tables.Add(orders);
 
-        var co = new DataRelation("CustomersOrders", customers.Columns["CustomerID"], orders.Columns["CustomerID"],
+        var co = new DataRelation("CustomersOrders", customers.Columns["CustomerId"]!, orders.Columns["CustomerId"]!,
             true);
         ds.Relations.Add(co);
 
-        var customerList = (
-            from e in XDocument
-                .Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("LINQSamples.Model.customers.xml"))
-                .Root.Elements("customer")
-            select new Customer
-            {
-                CustomerID = (string) e.Element("id"),
-                CompanyName = (string) e.Element("name"),
-                Address = (string) e.Element("address"),
-                City = (string) e.Element("city"),
-                Region = (string) e.Element("region"),
-                PostalCode = (string) e.Element("postalcode"),
-                Country = (string) e.Element("country"),
-                Phone = (string) e.Element("phone"),
-                Fax = (string) e.Element("fax"),
-                Orders = (
-                        from o in e.Elements("orders").Elements("order")
-                        select new Order
-                        {
-                            OrderID = (int) o.Element("id"),
-                            OrderDate = (DateTime) o.Element("orderdate"),
-                            Total = (decimal) o.Element("total")
-                        })
-                    .ToArray()
-            }
-        ).ToList();
-
-        foreach (var cust in customerList)
+        var xElement = XDocument
+            .Load(Assembly.GetExecutingAssembly().GetManifestResourceStream("LINQSamples.Model.customers.xml")!)
+            .Root;
+        if (xElement != null)
         {
-            customers.Rows.Add(cust.CustomerID, cust.CompanyName, cust.Address, cust.City, cust.Region, cust.PostalCode,
-                cust.Country, cust.Phone, cust.Fax);
-            foreach (var order in cust.Orders)
-                orders.Rows.Add(order.OrderID, cust.CustomerID, order.OrderDate, order.Total);
+            var customerList = (
+                from e in xElement.Elements("customer")
+                select new Customer
+                {
+                    CustomerId = (string) e.Element("id"),
+                    CompanyName = (string) e.Element("name"),
+                    Address = (string) e.Element("address"),
+                    City = (string) e.Element("city"),
+                    Region = (string) e.Element("region"),
+                    PostalCode = (string) e.Element("postalcode"),
+                    Country = (string) e.Element("country"),
+                    Phone = (string) e.Element("phone"),
+                    Fax = (string) e.Element("fax"),
+                    Orders = (
+                            from o in e.Elements("orders").Elements("order")
+                            select new Order
+                            {
+                                OrderId = (int) o.Element("id"),
+                                OrderDate = (DateTime) o.Element("orderdate"),
+                                Total = (decimal) o.Element("total")
+                            })
+                        .ToArray()
+                }
+            ).ToList();
+
+            foreach (var cust in customerList)
+            {
+                customers.Rows.Add(cust.CustomerId, cust.CompanyName, cust.Address, cust.City, cust.Region, cust.PostalCode,
+                    cust.Country, cust.Phone, cust.Fax);
+                foreach (var order in cust.Orders!)
+                    orders.Rows.Add(order.OrderId, cust.CustomerId, order.OrderDate, order.Total);
+            }
         }
     }
 

@@ -98,7 +98,6 @@ var groupingOperator = new GroupingOperators();
 //// element less than its position
 
 
-
 ////Comment or uncomment the method calls below to run or not
 
 orderingOperator.Linq28(); // This sample uses orderby to sort a list of words alphabetically
@@ -137,7 +136,6 @@ orderingOperator.Linq28(); // This sample uses orderby to sort a list of words a
 
 //orderingOperator.Linq39(); // This sample uses Reverse to  create a list of  all digits in the  array whose second 
 //// letter is 'i' that is reversed from the order in the original array
-
 
 
 //groupingOperator

@@ -6,10 +6,10 @@ namespace LINQSamples.Helper;
 public class ObjectDumper
 {
     private readonly int depth;
-    private int level;
-    private int pos;
 
     private readonly TextWriter writer;
+    private int level;
+    private int pos;
 
     private ObjectDumper(int depth)
     {
