@@ -1,13 +1,32 @@
+// ***********************************************************************
+// Assembly         : LINQSamples
+// Author           : V U M Sastry Sagi
+// Created          : 07-10-2023
+// ***********************************************************************
+// <copyright file="PartitioningOperators.cs" company="LINQSamples">
+//     Copyright (c) KFin Technologies Ltd. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.ComponentModel;
 using LINQSamples.Helper;
 using LINQSamples.Model;
 
 namespace LINQSamples.Operators;
 
+/// <summary>
+/// Class PartitioningOperators.
+/// </summary>
 public class PartitioningOperators
 {
+    /// <summary>
+    /// The customer list
+    /// </summary>
     private List<Customer> customerList;
 
+    /// <summary>
+    /// Linq20s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses Take to get only the first 3 elements of " +
                  "the array.")]
@@ -21,6 +40,9 @@ public class PartitioningOperators
         foreach (var n in first3Numbers) Console.WriteLine(n);
     }
 
+    /// <summary>
+    /// Linq21s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses Take to get the first 3 orders from customers " +
                  "in Washington.")]
@@ -36,9 +58,12 @@ public class PartitioningOperators
             .Take(3);
 
         Console.WriteLine("First 3 orders in WA:");
-        foreach (var order in first3WAOrders) ObjectDumper.Write(order);
+        foreach (var order in first3WAOrders) Console.WriteLine(ObjectDumper.Dump(order));
     }
 
+    /// <summary>
+    /// Linq22s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses Skip to get all but the first four elements of " +
                  "the array.")]
@@ -52,13 +77,16 @@ public class PartitioningOperators
         foreach (var n in allButFirst4Numbers) Console.WriteLine(n);
     }
 
+    /// <summary>
+    /// Linq23s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses Take to get all but the first 2 orders from customers " +
                  "in Washington.")]
     public void Linq23()
     {
         var customers = new SampleList().GetCustomerList();
-
+        Console.WriteLine(ObjectDumper.Dump(customers));
         var waOrders =
             from cust in customers
             from order in cust.Orders
@@ -68,9 +96,12 @@ public class PartitioningOperators
         var allButFirst2Orders = waOrders.Skip(2);
 
         Console.WriteLine("All but first 2 orders in WA:");
-        foreach (var order in allButFirst2Orders) ObjectDumper.Write(order);
+        foreach (var order in allButFirst2Orders) Console.WriteLine(ObjectDumper.Dump(order));
     }
 
+    /// <summary>
+    /// Linq24s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses TakeWhile to return elements starting from the " +
                  "beginning of the array until a number is read whose value is not less than 6.")]
@@ -84,6 +115,9 @@ public class PartitioningOperators
         foreach (var num in firstNumbersLessThan6) Console.WriteLine(num);
     }
 
+    /// <summary>
+    /// Linq25s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses TakeWhile to return elements starting from the " +
                  "beginning of the array until a number is hit that is less than its position " +
@@ -98,6 +132,9 @@ public class PartitioningOperators
         foreach (var n in firstSmallNumbers) Console.WriteLine(n);
     }
 
+    /// <summary>
+    /// Linq26s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses SkipWhile to get the elements of the array " +
                  "starting from the first element divisible by 3.")]
@@ -114,6 +151,9 @@ public class PartitioningOperators
         foreach (var n in allButFirst3Numbers) Console.WriteLine(n);
     }
 
+    /// <summary>
+    /// Linq27s this instance.
+    /// </summary>
     [Category("Partitioning Operators")]
     [Description("This sample uses SkipWhile to get the elements of the array " +
                  "starting from the first element less than its position.")]

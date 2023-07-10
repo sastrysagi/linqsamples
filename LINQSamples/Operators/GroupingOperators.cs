@@ -1,18 +1,40 @@
+// ***********************************************************************
+// Assembly         : LINQSamples
+// Author           : V U M Sastry Sagi
+// Created          : 07-10-2023
+// ***********************************************************************
+// <copyright file="GroupingOperators.cs" company="LINQSamples">
+//     Copyright (c) KFin Technologies Ltd. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.ComponentModel;
 using System.Data;
 using LINQSamples.Model;
 
 namespace LINQSamples.Operators;
 
+/// <summary>
+/// Class GroupingOperators.
+/// </summary>
 public class GroupingOperators
 {
+    /// <summary>
+    /// The test ds
+    /// </summary>
     private readonly DataSet testDS;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GroupingOperators"/> class.
+    /// </summary>
     public GroupingOperators()
     {
         testDS = TestData.CreateTestDataset();
     }
 
+    /// <summary>
+    /// Linq40s this instance.
+    /// </summary>
     [Category("Grouping Operators")]
     [Description("This sample uses group by to partition a list of numbers by " +
                  "their remainder when divided by 5.")]
@@ -33,6 +55,9 @@ public class GroupingOperators
         }
     }
 
+    /// <summary>
+    /// Linq41s this instance.
+    /// </summary>
     [Category("Grouping Operators")]
     [Description("This sample uses group by to partition a list of words by " +
                  "their first letter.")]
@@ -53,6 +78,9 @@ public class GroupingOperators
         }
     }
 
+    /// <summary>
+    /// Linq42s this instance.
+    /// </summary>
     [Category("Grouping Operators")]
     [Description("This sample uses group by to partition a list of products by category.")]
     public void Linq42()
@@ -72,6 +100,9 @@ public class GroupingOperators
         }
     }
 
+    /// <summary>
+    /// Linq43s this instance.
+    /// </summary>
     [Category("Grouping Operators")]
     [Description("This sample uses group by to partition a list of each customer's orders, " +
                  "first by year, and then by month.")]
@@ -120,6 +151,9 @@ public class GroupingOperators
         }
     }
 
+    /// <summary>
+    /// Linq44s this instance.
+    /// </summary>
     [Category("Grouping Operators")]
     [Description("This sample uses GroupBy to partition trimmed elements of an array using " +
                  "a custom comparer that matches words that are anagrams of each other.")]
@@ -136,6 +170,9 @@ public class GroupingOperators
         }
     }
 
+    /// <summary>
+    /// Linq45s this instance.
+    /// </summary>
     [Category("Grouping Operators")]
     [Description("This sample uses GroupBy to partition trimmed elements of an array using " +
                  "a custom comparer that matches words that are anagrams of each other, " +
@@ -157,18 +194,39 @@ public class GroupingOperators
         }
     }
 
+    /// <summary>
+    /// Class AnagramEqualityComparer.
+    /// Implements the <see cref="System.Collections.Generic.IEqualityComparer{System.String}" />
+    /// </summary>
+    /// <seealso cref="System.Collections.Generic.IEqualityComparer{System.String}" />
     private class AnagramEqualityComparer : IEqualityComparer<string>
     {
+        /// <summary>
+        /// Determines whether the specified objects are equal.
+        /// </summary>
+        /// <param name="x">The first object of type <paramref name="T" /> to compare.</param>
+        /// <param name="y">The second object of type <paramref name="T" /> to compare.</param>
+        /// <returns><see langword="true" /> if the specified objects are equal; otherwise, <see langword="false" />.</returns>
         public bool Equals(string x, string y)
         {
             return getCanonicalString(x) == getCanonicalString(y);
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         public int GetHashCode(string obj)
         {
             return getCanonicalString(obj).GetHashCode();
         }
 
+        /// <summary>
+        /// Gets the canonical string.
+        /// </summary>
+        /// <param name="word">The word.</param>
+        /// <returns>System.String.</returns>
         private string getCanonicalString(string word)
         {
             var wordChars = word.ToCharArray();

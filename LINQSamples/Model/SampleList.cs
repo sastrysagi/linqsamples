@@ -1,13 +1,36 @@
-﻿using System.Reflection;
+﻿// ***********************************************************************
+// Assembly         : LINQSamples
+// Author           : V U M Sastry Sagi
+// Created          : 07-10-2023
+// ***********************************************************************
+// <copyright file="SampleList.cs" company="LINQSamples">
+//     Copyright (c) KFin Technologies Ltd. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace LINQSamples.Model;
 
+/// <summary>
+/// Class SampleList.
+/// </summary>
 public class SampleList
 {
+    /// <summary>
+    /// The customer list
+    /// </summary>
     private List<Customer>? _customerList;
+    /// <summary>
+    /// The product list
+    /// </summary>
     private List<Product>? _productList;
 
+    /// <summary>
+    /// Gets the product list.
+    /// </summary>
+    /// <returns>System.Nullable&lt;List&lt;Product&gt;&gt;.</returns>
     public List<Product>? GetProductList()
     {
         if (_productList == null)
@@ -16,6 +39,10 @@ public class SampleList
         return _productList;
     }
 
+    /// <summary>
+    /// Gets the customer list.
+    /// </summary>
+    /// <returns>System.Nullable&lt;List&lt;Customer&gt;&gt;.</returns>
     public List<Customer>? GetCustomerList()
     {
         if (_customerList == null)
@@ -24,6 +51,9 @@ public class SampleList
         return _customerList;
     }
 
+    /// <summary>
+    /// Creates the lists.
+    /// </summary>
     public void CreateLists()
     {
         // Product data created in-memory using collection initializer:

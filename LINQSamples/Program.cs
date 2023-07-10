@@ -1,4 +1,14 @@
-﻿using LINQSamples.Operators;
+﻿// ***********************************************************************
+// Assembly         : LINQSamples
+// Author           : V U M Sastry Sagi
+// Created          : 07-10-2023
+// ***********************************************************************
+// <copyright file="Program.cs" company="LINQSamples">
+//     Copyright (c) KFin Technologies Ltd. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using LINQSamples.Operators;
 
 Console.WriteLine("Hello, World!");
 
@@ -83,7 +93,7 @@ var groupingOperator = new GroupingOperators();
 
 //partitionOperator.Linq22(); // This sample uses Skip to get all but the first four elements of the array
 
-//partitionOperator.Linq23(); // This sample uses Take to get all but the first 2 orders from customers in Washington
+partitionOperator.Linq23(); // This sample uses Take to get all but the first 2 orders from customers in Washington
 
 //partitionOperator.Linq24(); // This sample uses TakeWhile to return elements starting from the beginning of the array 
 //// until a number is read whose value is not less than 6
@@ -100,7 +110,7 @@ var groupingOperator = new GroupingOperators();
 
 ////Comment or uncomment the method calls below to run or not
 
-orderingOperator.Linq28(); // This sample uses orderby to sort a list of words alphabetically
+//orderingOperator.Linq28(); // This sample uses orderby to sort a list of words alphabetically
 
 //orderingOperator.Linq29(); // This sample uses orderby to sort a list of words by length
 

@@ -1,11 +1,28 @@
-﻿using System.Data;
+﻿// ***********************************************************************
+// Assembly         : LINQSamples
+// Author           : V U M Sastry Sagi
+// Created          : 07-10-2023
+// ***********************************************************************
+// <copyright file="TestData.cs" company="LINQSamples">
+//     Copyright (c) KFin Technologies Ltd. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Data;
 using System.Reflection;
 using System.Xml.Linq;
 
 namespace LINQSamples.Model;
 
+/// <summary>
+/// Class TestData.
+/// </summary>
 public class TestData
 {
+    /// <summary>
+    /// Creates the test dataset.
+    /// </summary>
+    /// <returns>DataSet.</returns>
     public static DataSet CreateTestDataset()
     {
         var ds = new DataSet();
@@ -37,6 +54,10 @@ public class TestData
     }
 
 
+    /// <summary>
+    /// Creates the numbers table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateNumbersTable()
     {
         int[] numbers = {5, 4, 1, 3, 9, 8, 6, 7, 2, 0};
@@ -48,6 +69,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the empty numbers table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateEmptyNumbersTable()
     {
         var table = new DataTable("EmptyNumbers");
@@ -55,6 +80,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the digits table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateDigitsTable()
     {
         string[] digits = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
@@ -65,6 +94,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the words table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateWordsTable()
     {
         string[] words = {"aPPLE", "BlUeBeRrY", "cHeRry"};
@@ -75,6 +108,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the words2 table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateWords2Table()
     {
         string[] words = {"believe", "relief", "receipt", "field"};
@@ -85,6 +122,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the words3 table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateWords3Table()
     {
         string[] words = {"aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry"};
@@ -95,6 +136,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the words4 table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateWords4Table()
     {
         string[] words = {"blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese"};
@@ -105,6 +150,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the anagrams table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateAnagramsTable()
     {
         string[] anagrams = {"from   ", " salt", " earn ", "  last   ", " near ", " form  "};
@@ -115,6 +164,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the score records table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateScoreRecordsTable()
     {
         var scoreRecords = new[]
@@ -132,6 +185,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the attempted withdrawals table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateAttemptedWithdrawalsTable()
     {
         int[] attemptedWithdrawals = {20, 10, 40, 50, 10, 70, 30};
@@ -143,6 +200,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the numbers a table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateNumbersATable()
     {
         int[] numbersA = {0, 2, 4, 5, 6, 8, 9};
@@ -153,6 +214,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the numbers b table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateNumbersBTable()
     {
         int[] numbersB = {1, 3, 5, 7, 8};
@@ -163,6 +228,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the low numbers table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateLowNumbersTable()
     {
         int[] lowNumbers = {1, 11, 3, 19, 41, 65, 19};
@@ -173,6 +242,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the factors of300.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateFactorsOf300()
     {
         int[] factorsOf300 = {2, 2, 3, 5, 5};
@@ -184,6 +257,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the doubles table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateDoublesTable()
     {
         double[] doubles = {1.7, 2.3, 1.9, 4.1, 2.9};
@@ -195,6 +272,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the employees1 table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateEmployees1Table()
     {
         var table = new DataTable("Employees1");
@@ -212,6 +293,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the employees2 table.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateEmployees2Table()
     {
         var table = new DataTable("Employees2");
@@ -229,6 +314,10 @@ public class TestData
         return table;
     }
 
+    /// <summary>
+    /// Creates the customers and orders tables.
+    /// </summary>
+    /// <param name="ds">The ds.</param>
     public static void CreateCustomersAndOrdersTables(DataSet ds)
     {
         var customers = new DataTable("Customers");
@@ -297,6 +386,10 @@ public class TestData
         }
     }
 
+    /// <summary>
+    /// Creates the product list.
+    /// </summary>
+    /// <returns>DataTable.</returns>
     public static DataTable CreateProductList()
     {
         var table = new DataTable("Products");

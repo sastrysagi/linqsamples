@@ -1,3 +1,13 @@
+// ***********************************************************************
+// Assembly         : LINQSamples
+// Author           : V U M Sastry Sagi
+// Created          : 07-10-2023
+// ***********************************************************************
+// <copyright file="ProjectionOperators.cs" company="LINQSamples">
+//     Copyright (c) KFin Technologies Ltd. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System.ComponentModel;
 using System.Data;
 using LINQSamples.Helper;
@@ -5,15 +15,27 @@ using LINQSamples.Model;
 
 namespace LINQSamples.Operators;
 
+/// <summary>
+/// Class ProjectionOperators.
+/// </summary>
 public class ProjectionOperators
 {
+    /// <summary>
+    /// The test ds
+    /// </summary>
     private readonly DataSet testDS;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProjectionOperators"/> class.
+    /// </summary>
     public ProjectionOperators()
     {
         testDS = TestData.CreateTestDataset();
     }
 
+    /// <summary>
+    /// Linq6s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses select to produce a sequence of ints one higher than " +
                  "those in an existing array of ints.")]
@@ -30,6 +52,9 @@ public class ProjectionOperators
         foreach (var i in numsPlusOne) Console.WriteLine(i);
     }
 
+    /// <summary>
+    /// Linq7s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses select to return a sequence of just the names of a list of products.")]
     public void Linq7()
@@ -44,6 +69,9 @@ public class ProjectionOperators
         foreach (var productName in productNames) Console.WriteLine(productName);
     }
 
+    /// <summary>
+    /// Linq8s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses select to produce a sequence of strings representing " +
                  "the text version of a sequence of ints.")]
@@ -58,6 +86,9 @@ public class ProjectionOperators
         foreach (var s in textNums) Console.WriteLine(s);
     }
 
+    /// <summary>
+    /// Linq9s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses select to produce a sequence of the uppercase " +
                  "and lowercase versions of each word in the original array.")]
@@ -74,6 +105,9 @@ public class ProjectionOperators
         foreach (var ul in upperLowerWords) Console.WriteLine("Uppercase: " + ul.Upper + ", Lowercase: " + ul.Lower);
     }
 
+    /// <summary>
+    /// Linq10s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses select to produce a sequence containing text " +
                  "representations of digits and whether their length is even or odd.")]
@@ -92,6 +126,9 @@ public class ProjectionOperators
         foreach (var d in digitOddEvens) Console.WriteLine("The digit {0} is {1}.", d.Digit, d.Even ? "even" : "odd");
     }
 
+    /// <summary>
+    /// Linq11s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses select to produce a sequence containing some properties " +
                  "of Products, including UnitPrice which is renamed to Price " +
@@ -114,6 +151,9 @@ public class ProjectionOperators
     }
 
 
+    /// <summary>
+    /// Linq12s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses an indexed Select clause to determine if the value of ints " +
                  "in an array match their position in the array.")]
@@ -131,6 +171,9 @@ public class ProjectionOperators
         foreach (var n in numsInPlace) Console.WriteLine("{0}: {1}", n.Num, n.InPlace);
     }
 
+    /// <summary>
+    /// Linq13s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample combines select and where to make a simple query that returns " +
                  "the text form of each digit less than 5.")]
@@ -148,6 +191,9 @@ public class ProjectionOperators
         foreach (var num in lowNums) Console.WriteLine(num);
     }
 
+    /// <summary>
+    /// Linq14s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses a compound from clause to make a query that returns all pairs " +
                  "of numbers from both arrays such that the number from numbersA is less than the number " +
@@ -167,6 +213,9 @@ public class ProjectionOperators
         foreach (var pair in pairs) Console.WriteLine("{0} is less than {1}", pair.a, pair.b);
     }
 
+    /// <summary>
+    /// Linq15s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses a compound from clause to select all orders where the " +
                  "order total is less than 500.00.")]
@@ -187,9 +236,12 @@ public class ProjectionOperators
                 Total = o.Field<decimal>("Total")
             };
 
-        ObjectDumper.Write(smallOrders);
+        Console.WriteLine(ObjectDumper.Dump(smallOrders));
     }
 
+    /// <summary>
+    /// Linq16s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses a compound from clause to select all orders where the " +
                  "order was made in 1998 or later.")]
@@ -210,9 +262,12 @@ public class ProjectionOperators
                 OrderDate = o.Field<DateTime>("OrderDate")
             };
 
-        ObjectDumper.Write(myOrders);
+        Console.WriteLine(ObjectDumper.Dump(myOrders));
     }
 
+    /// <summary>
+    /// Linq17s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses a compound from clause to select all orders where the " +
                  "order total is greater than 2000.00 and uses from assignment to avoid " +
@@ -230,9 +285,12 @@ public class ProjectionOperators
                   && total >= 2000.0M
             select new {CustomerID = c.Field<string>("CustomerId"), OrderID = o.Field<int>("OrderId"), total};
 
-        ObjectDumper.Write(myOrders);
+        Console.WriteLine(ObjectDumper.Dump(myOrders));
     }
 
+    /// <summary>
+    /// Linq18s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses multiple from clauses so that filtering on customers can " +
                  "be done before selecting their orders.  This makes the query more efficient by " +
@@ -251,9 +309,12 @@ public class ProjectionOperators
                   && (DateTime) o["OrderDate"] >= cutoffDate
             select new {CustomerID = c.Field<string>("CustomerId"), OrderID = o.Field<int>("OrderId")};
 
-        ObjectDumper.Write(myOrders);
+        Console.WriteLine(ObjectDumper.Dump(myOrders));
     }
 
+    /// <summary>
+    /// Linq19s this instance.
+    /// </summary>
     [Category("Projection Operators")]
     [Description("This sample uses an indexed SelectMany clause to select all orders, " +
                  "while referring to customers by the order in which they are returned " +

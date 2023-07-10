@@ -1,157 +1,190 @@
-﻿using System.Collections;
+﻿// ***********************************************************************
+// Assembly         : LINQSamples
+// Author           : V U M Sastry Sagi
+// Created          : 07-10-2023
+// ***********************************************************************
+// <copyright file="ObjectDumper.cs" company="LINQSamples">
+//     Copyright (c) KFin Technologies Ltd. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System.Collections;
 using System.Reflection;
+using System.Text;
 
 namespace LINQSamples.Helper;
 
+/// <summary>
+/// Class ObjectDumper.
+/// </summary>
 public class ObjectDumper
 {
-    private readonly int depth;
-
-    private readonly TextWriter writer;
+    /// <summary>
+    /// The builder
+    /// </summary>
+    private StringBuilder builder;
+    /// <summary>
+    /// The level
+    /// </summary>
     private int level;
-    private int pos;
+    /// <summary>
+    /// The depth
+    /// </summary>
+    private int depth;
 
-    private ObjectDumper(int depth)
-    {
-        writer = Console.Out;
-        this.depth = depth;
-    }
-
-    public static void Write(object o)
-    {
-        Write(o, 0);
-    }
-
-    public static void Write(object o, int depth)
+    /// <summary>
+    /// Dumps the specified o.
+    /// </summary>
+    /// <param name="o">The o.</param>
+    /// <param name="depth">The depth.</param>
+    /// <returns>System.String.</returns>
+    public static string Dump(object o, int depth = 255)
     {
         var dumper = new ObjectDumper(depth);
         dumper.WriteObject(null, o);
+        return dumper.builder.ToString();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ObjectDumper"/> class.
+    /// </summary>
+    /// <param name="depth">The depth.</param>
+    private ObjectDumper(int depth)
+    {
+        this.builder = new StringBuilder();
+        this.depth = depth;
+    }
+
+    /// <summary>
+    /// Writes the specified s.
+    /// </summary>
+    /// <param name="s">The s.</param>
     private void Write(string s)
     {
         if (s != null)
         {
-            writer.Write(s);
-            pos += s.Length;
+            builder.Append(s.PadRight(level * 2));
         }
     }
 
-    private void WriteIndent()
-    {
-        for (var i = 0; i < level; i++) writer.Write("  ");
-    }
-
+    /// <summary>
+    /// Writes the line.
+    /// </summary>
     private void WriteLine()
     {
-        writer.WriteLine();
-        pos = 0;
+        builder.AppendLine();
     }
 
-    private void WriteTab()
-    {
-        Write("  ");
-        while (pos % 8 != 0) Write(" ");
-    }
-
+    /// <summary>
+    /// Writes the object.
+    /// </summary>
+    /// <param name="prefix">The prefix.</param>
+    /// <param name="o">The o.</param>
     private void WriteObject(string prefix, object o)
     {
+        Write(prefix);
         if (o == null || o is ValueType || o is string)
         {
-            WriteIndent();
-            Write(prefix);
             WriteValue(o);
             WriteLine();
         }
-        else if (o is IEnumerable)
+        else if (o is IEnumerable enumerable)
         {
-            foreach (var element in (IEnumerable) o)
-                if (element is IEnumerable && !(element is string))
+            WriteLine();
+            if (level < depth)
+            {
+                level++;
+                foreach (var element in enumerable)
                 {
-                    WriteIndent();
-                    Write(prefix);
-                    Write("...");
-                    WriteLine();
-                    if (level < depth)
-                    {
-                        level++;
-                        WriteObject(prefix, element);
-                        level--;
-                    }
+                    WriteObject("  ", element);
                 }
-                else
-                {
-                    WriteObject(prefix, element);
-                }
+                level--;
+            }
         }
         else
         {
-            var members = o.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance);
-            WriteIndent();
-            Write(prefix);
-            var propWritten = false;
-            foreach (var m in members)
-            {
-                var f = m as FieldInfo;
-                var p = m as PropertyInfo;
-                if (f != null || p != null)
-                {
-                    if (propWritten)
-                        WriteTab();
-                    else
-                        propWritten = true;
-                    Write(m.Name);
-                    Write("=");
-                    var t = f != null ? f.FieldType : p.PropertyType;
-                    if (t.IsValueType || t == typeof(string))
-                    {
-                        WriteValue(f != null ? f.GetValue(o) : p.GetValue(o, null));
-                    }
-                    else
-                    {
-                        if (typeof(IEnumerable).IsAssignableFrom(t))
-                            Write("...");
-                        else
-                            Write("{ }");
-                    }
-                }
-            }
-
-            if (propWritten) WriteLine();
-            if (level < depth)
-                foreach (var m in members)
-                {
-                    var f = m as FieldInfo;
-                    var p = m as PropertyInfo;
-                    if (f != null || p != null)
-                    {
-                        var t = f != null ? f.FieldType : p.PropertyType;
-                        if (!(t.IsValueType || t == typeof(string)))
-                        {
-                            var value = f != null ? f.GetValue(o) : p.GetValue(o, null);
-                            if (value != null)
-                            {
-                                level++;
-                                WriteObject(m.Name + ": ", value);
-                                level--;
-                            }
-                        }
-                    }
-                }
+            WriteObjectProperties(o);
+            WriteLine();
         }
     }
 
+    /// <summary>
+    /// Writes the value with prefix.
+    /// </summary>
+    /// <param name="prefix">The prefix.</param>
+    /// <param name="value">The value.</param>
+    private void WriteValueWithPrefix(string prefix, object value)
+    {
+        Write($"  {prefix} = ");
+        WriteValue(value);
+        WriteLine();
+    }
+
+    /// <summary>
+    /// Writes the value.
+    /// </summary>
+    /// <param name="o">The o.</param>
     private void WriteValue(object o)
     {
         if (o == null)
+        {
             Write("null");
-        else if (o is DateTime)
-            Write(((DateTime) o).ToShortDateString());
+        }
+        else if (o is DateTime dateTime)
+        {
+            Write(dateTime.ToShortDateString());
+        }
         else if (o is ValueType || o is string)
+        {
             Write(o.ToString());
-        else if (o is IEnumerable)
-            Write("...");
+        }
+        else if (o is IEnumerable enumerable)
+        {
+            Write("[");
+            Write(Environment.NewLine);
+            level++;
+            foreach (var item in enumerable)
+            {
+                WriteObjectProperties(item);
+                Write(Environment.NewLine);
+            }
+            level--;
+            Write("]");
+        }
         else
-            Write("{ }");
+        {
+            Write("{");
+            Write(Environment.NewLine);
+            level++;
+            WriteObjectProperties(o);
+            level--;
+            Write("}");
+        }
+    }
+
+    /// <summary>
+    /// Writes the object properties.
+    /// </summary>
+    /// <param name="o">The o.</param>
+    private void WriteObjectProperties(object o)
+    {
+        if (o == null)
+        {
+            return;
+        }
+
+        var members = o.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance);
+        foreach (MemberInfo member in members)
+        {
+            if (member is FieldInfo field)
+            {
+                WriteValueWithPrefix(field.Name, field.GetValue(o));
+            }
+            else if (member is PropertyInfo property)
+            {
+                WriteValueWithPrefix(property.Name, property.GetValue(o));
+            }
+        }
     }
 }
+
